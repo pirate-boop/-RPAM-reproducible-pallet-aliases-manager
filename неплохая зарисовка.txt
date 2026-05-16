@@ -1,0 +1,383 @@
+> workflow/action manager для Linux/NixOS с TUI-интерфейсом.
+
+
+
+И ключевая мысль  здесь:
+> не зависеть от .zshrc, .bashrc, .fish
+важная часть концепта.
+
+Потому что shell aliases — это:
+
+привязка к shell
+
+помойка строк
+
+отсутствие структуры
+
+отсутствие UI
+
+отсутствие discoverability
+
+сложно переносить
+
+сложно делиться
+
+сложно документировать
+
+
+Нужно
+
+независимую систему действий
+
+категории
+
+поиск
+
+превью
+
+backup
+
+portable config
+
+reproducible workflows
+
+declarative + interactive подход одновременно
+
+
+Это уже ближе к:
+
+command palette
+
+launcher
+
+workflow runner
+
+TUI automation layer
+
+
+
+---
+RPAM — Reproducible Pallet Alias Manager
+
+TUI-менеджер команд, workflow и пользовательских действий для Linux/NixOS, вдохновлённый:
+
+Yazi
+
+LazyGit
+
+command palette из IDE
+
+
+
+---
+
+Главная цель
+
+Создать систему управления командами и workflow без зависимости от:
+
+.bashrc
+
+.zshrc
+
+.fish
+
+shell-specific aliases
+
+
+
+---
+
+Основная идея
+
+Вместо хаоса alias-файлов пользователь получает структурированный интерфейс:
+
+Categories -> Commands -> Actions
+
+Пример:
+
+nix/
+waydroid/
+gaming/
+mtp/
+backup/
+docker/
+
+
+---
+
+Концепт интерфейса
+
+Интерфейс работает как файловый менеджер.
+
+Левая колонка
+
+Категории / группы.
+
+Центральная колонка
+
+Команды внутри категории.
+
+Правая колонка
+
+Превью:
+
+полная команда
+
+описание
+
+теги
+
+нужен ли sudo
+
+история запусков
+
+backup info
+
+
+
+---
+
+Основные возможности
+
+Поиск
+
+Нажатие:
+
+/
+
+Открывает fuzzy-search как в Yazi/Helix.
+
+
+---
+
+Создание категорий
+
+Shift+A
+
+Создаёт группу.
+
+
+---
+
+Создание action/alias
+
+a
+
+Открывает popup:
+
+Name:
+Command:
+Description:
+Category:
+Tags:
+
+
+---
+
+Выполнение команд
+
+Enter:
+
+запускает команду
+
+открывает attach к терминалу
+
+показывает output/logs
+
+
+
+---
+
+Структура хранения
+
+Вместо одного огромного shell config:
+
+~/.config/rpam/
+
+Например:
+
+~/.config/rpam/nix/rebuild.toml
+~/.config/rpam/nix/update.toml
+~/.config/rpam/waydroid/start.toml
+
+
+---
+
+Почему это удобно
+
+Пользователь:
+
+не запоминает сокращения
+
+не ищет alias по файлам
+
+видит структуру действий
+
+быстрее обучается своей системе
+
+получает discoverability
+
+
+
+---
+
+NixOS integration
+
+RPAM может:
+
+импортировать aliases из nix modules
+
+экспортировать actions в Home Manager
+
+хранить dotfiles отдельно
+
+поддерживать reproducible configs
+
+
+
+---
+
+Backup system
+
+Перед изменением:
+
+автоматический backup
+
+
+Пример:
+
+rebuild.16-05-2026_21-41-02.bak
+
+
+---
+
+Backup features
+
+backup limit
+
+auto cleanup
+
+rollback UI
+
+diff preview
+
+
+
+---
+
+Advanced идеи
+
+Tags
+
+#root
+#dangerous
+#network
+#gaming
+
+
+---
+
+Favorites
+
+Быстрый доступ к часто используемым workflow.
+
+
+---
+
+History
+
+Recently used commands/actions.
+
+
+---
+
+Shell fallback mode
+
+Shift + :
+
+Открывает shell palette.
+
+
+---
+
+Это уже не просто alias manager
+
+По сути это:
+
+> “filesystem-like workflow environment for Linux power users”
+
+
+
+Особенно для:
+
+NixOS
+
+dotfiles users
+
+terminal-heavy users
+
+Wayland rice community
+
+
+
+---
+
+Почему идея не бесполезная
+
+Потому что проблема реальная.
+
+Сейчас люди:
+
+держат 500 alias в shell
+
+забывают команды
+
+плодят README
+
+копируют snippets
+
+ищут по history
+
+
+А у тут:
+
+визуальная структура
+
+поиск
+
+организация
+
+reproducibility
+
+UI поверх shell workflows
+
+
+
+---
+
+И я правильно понял важную вещь
+
+Если когда-нибудь делать такое через AI — не просить:
+
+"сделай весь проект"
+
+Это почти всегда превращается в нейрослоп.
+
+Правильнее:
+
+отдельно storage layer
+
+отдельно TUI navigation
+
+отдельно fuzzy search
+
+отдельно executor
+
+отдельно backup system
+
+отдельно nix integration
+
+
+А потом всё собирать.
+
+Именно так сейчас многие indie-проекты и пилятся.
