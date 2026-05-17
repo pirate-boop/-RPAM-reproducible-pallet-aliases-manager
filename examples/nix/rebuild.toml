@@ -1,1 +1,10 @@
+name = "rebuild"
+category = "nix"
 
+exec = "sudo nixos-rebuild switch --flake /etc/nixos#main"
+
+description = "Rebuild NixOS system"
+
+tags = ["nix", "system"]
+
+requires_sudo = true
